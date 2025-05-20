@@ -4,14 +4,15 @@ let taskList = document.getElementById("taskList");
 
 addBtn.onclick = () => {
 
-  let text = taskInput.value.trim();
-  if (text !== "") {
+let span = document.createElement("span");
+span.textContent = text;
+span.onclick = () => {
+  span.classList.toggle("done");
+};
 
-    let li = document.createElement("li");
-    li.textContent = text;
-    taskList.appendChild(li);
-    taskInput.value = "";
+let li = document.createElement("li");
+li.appendChild(span);
+taskList.appendChild(li);
+taskInput.value = "";
 
-    
-  }
 };
