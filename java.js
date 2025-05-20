@@ -22,7 +22,19 @@ function renderTasks() {
       renderTasks();
     };
 
+    const delBtn = document.createElement("button");
+    delBtn.textContent = "Delete";
+    delBtn.classList.add("delete-btn");
+    delBtn.onclick = () => {
+      tasks.splice(index, 1);
+      saveTasks();
+      renderTasks();
+    };
 
+    li.appendChild(span);
+    li.appendChild(delBtn);
+    taskList.appendChild(li);
+  });
 }
 
 addBtn.onclick = () => {
