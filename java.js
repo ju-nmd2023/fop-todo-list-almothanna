@@ -1,18 +1,38 @@
-let taskInput = document.getElementById("taskInput");
-let addBtn = document.getElementById("addBtn");
-let taskList = document.getElementById("taskList");
+const taskInput = document.getElementById("taskInput");
+const addBtn = document.getElementById("addBtn");
+const taskList = document.getElementById("taskList");
+
+let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+
+function saveTasks() {
+  localStorage.setItem("tasks", JSON.stringify(tasks));
+}
+
+function renderTasks() {
+  taskList.innerHTML = "";
+  tasks.forEach((task, index) => {
+    const li = document.createElement("li");
+
+    const span = document.createElement("span");
+    span.textContent = task.text;
+    if (task.done) span.classList.add("done");
+    span.onclick = () => {
+      tasks[index].done = !tasks[index].done;
+      saveTasks();
+      renderTasks();
+    };
+
+
+}
 
 addBtn.onclick = () => {
-
-let span = document.createElement("span");
-span.textContent = text;
-span.onclick = () => {
-  span.classList.toggle("done");
+  const text = taskInput.value.trim();
+  if (text !== "") {
+    tasks.push({ text: text, done: false });
+    taskInput.value = "";
+    saveTasks();
+    renderTasks();
+  }
 };
 
-let li = document.createElement("li");
-li.appendChild(span);
-taskList.appendChild(li);
-taskInput.value = "";
-
-};
+renderTasks();
